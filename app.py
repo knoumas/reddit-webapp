@@ -6,12 +6,12 @@ app = Flask(__name__)
 
 # 🔹 Reddit API Credentials (Replace with your own)
 reddit = praw.Reddit(
-    client_id=os.getenv("oe9zND_v3CFUyG62uikZsA"),
-    client_secret=os.getenv("-sHW-Ux2i63kPzjpdqkSoYXJev659w"),
-    user_agent="RedditBot",
-    username=os.getenv("MCBBot"),
-    password=os.getenv("Rooftop1!"),
-    redirect_uri=os.getenv("https://reddit-webapp.onrender.com")  # Add this line
+    reddit = praw.Reddit(
+    client_id=os.getenv("REDDIT_CLIENT_ID"),
+    client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+    user_agent=os.getenv("REDDIT_USER_AGENT"),
+    username=os.getenv("REDDIT_USERNAME"),
+    password=os.getenv("REDDIT_PASSWORD")
 )
 
 # 🔹 Route for Home Page
