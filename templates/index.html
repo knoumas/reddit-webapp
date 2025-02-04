@@ -2,19 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Reddit Comment Remover">
     <title>Reddit Comment Remover</title>
+
+    <!-- Home Screen Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon.png">
+
+    <style>
+        /* Mobile-Friendly Design */
+        body {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+
+        input, button {
+            font-size: 16px;
+            padding: 12px;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #28a745;
+        }
+    </style>
 </head>
 <body>
-    <h2>Reddit Comment Remover</h2>
-    <form method="post">
-        <input type="text" name="username" placeholder="Enter Reddit Username" required>
-        <button type="submit">Remove Comments</button>
-    </form>
 
-    {% if removed_count is not none %}
-        <h3>Removed {{ removed_count }} comments from {{ username }}</h3>
-    {% endif %}
+    <div class="container">
+        <h2>Reddit Comment Remover</h2>
+        <form method="post">
+            <input type="text" name="username" placeholder="Enter Reddit Username" required>
+            <button type="submit">Remove Comments</button>
+        </form>
+
+        {% if removed_count is not none %}
+            <h3>Removed {{ removed_count }} comments from {{ username }}</h3>
+        {% endif %}
+    </div>
+
 </body>
 </html>
-
