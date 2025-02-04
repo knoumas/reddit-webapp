@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Comment Remover</title>
+</head>
+<body>
+    <h2>Reddit Comment Remover</h2>
+    <form method="post">
+        <input type="text" name="username" placeholder="Enter Reddit Username" required>
+        <button type="submit">Remove Comments</button>
+    </form>
+
+    {% if removed_count is not none %}
+        <h3>Removed {{ removed_count }} comments from {{ username }}</h3>
+    {% endif %}
+</body>
+</html>
+
