@@ -23,6 +23,13 @@ def index():
         return render_template("index.html", removed_count=removed_count, username=target_username)
     return render_template("index.html", removed_count=None)
 
+# 🔹 Route for Banning Users
+@app.route("/ban", methods=["POST"])
+def ban_user():
+    ban_username = request.form["ban_username"]
+    ban_message = ban_for_account_age_violation(ban_username)
+    return render_template("index.html", ban_message=ban_message)
+
 # 🔹 Function to Remove Comments
 def remove_user_comments(username):
     try:

@@ -18,7 +18,40 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
+            text-align: center;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Web App</title>
+</head>
+<body>
+    <h1>Reddit Moderation Tool</h1>
+
+    <!-- Form for Removing Comments -->
+    <h2>Remove Comments</h2>
+    <form action="/" method="post">
+        <label for="username">Enter Reddit Username:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Remove Comments</button>
+    </form>
+    {% if removed_count is not none %}
+        <p>Removed {{ removed_count }} comments from r/MinecraftBuddies.</p>
+    {% endif %}
+
+    <!-- Form for Banning Users for Account Age Violation -->
+    <h2>Ban User for Account Age Violation</h2>
+    <form action="/ban" method="post">
+        <label for="ban_username">Enter Reddit Username:</label>
+        <input type="text" id="ban_username" name="ban_username" required>
+        <button type="submit">Ban User</button>
+    </form>
+    {% if ban_message %}
+        <p>{{ ban_message }}</p>
+    {% endif %}
+</body>
+</html>
+
             background-color: #f8f9fa;
         }
 
