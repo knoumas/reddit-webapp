@@ -2,112 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Reddit Comment Remover">
-    <title>Reddit Comment Remover</title>
-
-    <!-- Home Screen Icon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon.png">
-
-    <style>
-        /* Mobile-Friendly Design */
-        body {
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reddit Web App</title>
-</head>
-<body>
-    <h1>Reddit Moderation Tool</h1>
-
-    <!-- Form for Removing Comments -->
-    <h2>Remove Comments</h2>
-    <form action="/" method="post">
-        <label for="username">Enter Reddit Username:</label>
-        <input type="text" id="username" name="username" required>
-        <button type="submit">Remove Comments</button>
-    </form>
-    {% if removed_count is not none %}
-        <p>Removed {{ removed_count }} comments from r/MinecraftBuddies.</p>
-    {% endif %}
-
-    <!-- Form for Banning Users for Account Age Violation -->
-    <h2>Ban User for Account Age Violation</h2>
-    <form action="/ban" method="post">
-        <label for="ban_username">Enter Reddit Username:</label>
-        <input type="text" id="ban_username" name="ban_username" required>
-        <button type="submit">Ban User</button>
-    </form>
-    {% if ban_message %}
-        <p>{{ ban_message }}</p>
-    {% endif %}
-</body>
-</html>
-
-            background-color: #f8f9fa;
+    <title>Reddit Moderation Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
         }
 
         .container {
-            width: 90%;
             max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
+            margin: auto;
             background: white;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
-            font-size: 22px;
+        h1, h2 {
+            color: #333;
         }
 
-        input, button {
-            font-size: 16px;
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input {
             padding: 12px;
-            width: 100%;
-            margin-top: 10px;
-            border-radius: 6px;
+            font-size: 16px;
             border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
         }
 
         button {
-            background: #007bff;
+            background-color: #007BFF;
             color: white;
+            padding: 12px;
             border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
         }
 
         button:hover {
-            background: #0056b3;
+            background-color: #0056b3;
         }
 
-        h3 {
-            font-size: 18px;
-            color: #28a745;
+        p {
+            font-size: 16px;
+            color: green;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            input, button {
+                font-size: 14px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h2>Reddit Comment Remover</h2>
-        <form method="post">
-            <input type="text" name="username" placeholder="Enter Reddit Username" required>
+        <h1>Reddit Moderation Tool</h1>
+
+        <!-- Form for Removing Comments -->
+        <h2>Remove Comments</h2>
+        <form action="/" method="post">
+            <label for="username">Enter Reddit Username:</label>
+            <input type="text" id="username" name="username" required>
             <button type="submit">Remove Comments</button>
         </form>
-
         {% if removed_count is not none %}
-            <h3>Removed {{ removed_count }} comments from {{ username }}</h3>
+            <p>Removed {{ removed_count }} comments from r/MinecraftBuddies.</p>
+        {% endif %}
+
+        <!-- Form for Banning Users -->
+        <h2>Ban User for Account Age Violation</h2>
+        <form action="/ban" method="post">
+            <label for="ban_username">Enter Reddit Username:</label>
+            <input type="text" id="ban_username" name="ban_username" required>
+            <button type="submit">Ban User</button>
+        </form>
+        {% if ban_message %}
+            <p>{{ ban_message }}</p>
         {% endif %}
     </div>
-
 </body>
 </html>
