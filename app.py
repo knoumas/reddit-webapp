@@ -14,21 +14,42 @@ reddit = praw.Reddit(
     password=os.getenv("REDDIT_PASSWORD")
 )
 
+# 🔹 Log File for Tracking Actions
+LOG_FILE = "bot_activity.log"
+
+def log_action(action):
+    timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    log_entry = f"[{timestamp}] {action}\n"
+    with open(LOG_FILE, "a") as log:
+        log.write(log_entry)
+
 # 🔹 Route for Home Page
 @app.route("/", methods=["GET", "POST"])
 def index():
+    log_entries = []
+    if os.path.exists(LOG_FILE):
+        with open(LOG_FILE, "r") as log:
+            log_entries = log.readlines()
+    
     if request.method == "POST":
         target_username = request.form["username"]
         removed_count = remove_user_comments(target_username)
-        return render_template("index.html", removed_count=removed_count, username=target_username)
-    return render_template("index.html", removed_count=None)
+        log_action(f"Removed {removed_count} comments from {target_username}.")
+        return render_template("index.html", removed_count=removed_count, username=target_username, log_entries=log_entries)
+    
+    return render_template("index.html", removed_count=None, log_entries=log_entries)
 
 # 🔹 Route for Banning Users
 @app.route("/ban", methods=["POST"])
 def ban_user():
     ban_username = request.form["ban_username"]
     ban_message = ban_for_account_age_violation(ban_username)
-    return render_template("index.html", ban_message=ban_message)
+    log_action(f"Banned user {ban_username} for account age violation.")
+    log_entries = []
+    if os.path.exists(LOG_FILE):
+        with open(LOG_FILE, "r") as log:
+            log_entries = log.readlines()
+    return render_template("index.html", ban_message=ban_message, log_entries=log_entries)
 
 # 🔹 Function to Remove Comments
 def remove_user_comments(username):
@@ -40,9 +61,10 @@ def remove_user_comments(username):
             if comment.subreddit.display_name.lower() == "minecraftbuddies":
                 comment.mod.remove()
                 removed += 1
+        log_action(f"Successfully removed {removed} comments from {username}.")
         return removed
     except Exception as e:
-        print(f"Error: {e}")
+        log_action(f"Error removing comments for {username}: {e}")
         return -1  # Return -1 if an error occurs
 
 # 🔹 Function to Ban Users for Account Age Violation
@@ -62,6 +84,7 @@ def ban_for_account_age_violation(username):
 
             subreddit = reddit.subreddit("MinecraftBuddies")
             subreddit.banned.add(username, duration=days_until_eligible, note="Rule 1 - Account age violation", ban_message=ban_message)
+            log_action(f"Banned user {username} for {days_until_eligible} days due to account age violation.")
             
             # Remove all previous comments and posts
             for comment in target_user.comments.new(limit=None):
@@ -75,7 +98,7 @@ def ban_for_account_age_violation(username):
         else:
             return f"User {username} meets the account age requirement. No action taken."
     except Exception as e:
-        print(f"Error: {e}")
+        log_action(f"Error banning user {username}: {e}")
         return "An error occurred while processing the ban."
 
 # 🔹 Run the Flask App
